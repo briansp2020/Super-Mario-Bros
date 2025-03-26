@@ -2,7 +2,7 @@
 
 Coding with Warren Game Project #1
 
-We are going to create Super Mario Bros following YouTube tutorial and improve it. This project was copied from [**Download**](https://github.com/zigurous/unity-super-mario-tutorial/ and converted to Unity 6.
+We are going to create Super Mario Bros following YouTube tutorial and improve it. This project was copied from https://github.com/zigurous/unity-super-mario-tutorial/ and converted to Unity 6.
 
 
 README.md From Original Source:
