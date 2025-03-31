@@ -8,6 +8,23 @@ public class Pipe : MonoBehaviour
     public Vector3 enterDirection = Vector3.down;
     public Vector3 exitDirection = Vector3.zero;
 
+    private AudioSource audioSource;
+    public AudioClip pipeSound;
+
+    private Music music;
+    [Tooltip("The music that should play when the player exits the pipe")]
+    public AudioClip newMusic;
+
+
+    private void Awake()
+    {
+        if (gameObject.GetComponent<AudioSource>() != null)
+        {
+            audioSource = gameObject.GetComponent<AudioSource>();
+        }
+        music = Camera.main.GetComponent<Music>();
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (connection != null && other.CompareTag("Player"))
@@ -25,15 +42,21 @@ public class Pipe : MonoBehaviour
         Vector3 enteredPosition = transform.position + enterDirection;
         Vector3 enteredScale = Vector3.one * 0.5f;
 
+        music.StopMusic();
+        audioSource.PlayOneShot(pipeSound);
+
         yield return Move(player.transform, enteredPosition, enteredScale);
         yield return new WaitForSeconds(1f);
 
         var sideSrolling = Camera.main.GetComponent<SideScrollingCamera>();
         sideSrolling.SetUnderground(connection.position.y < sideSrolling.undergroundThreshold);
 
+        music.PlayMusic(newMusic);
+
         if (exitDirection != Vector3.zero)
         {
             player.transform.position = connection.position - exitDirection;
+            audioSource.PlayOneShot(pipeSound);
             yield return Move(player.transform, connection.position + exitDirection, Vector3.one);
         }
         else

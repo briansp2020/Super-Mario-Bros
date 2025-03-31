@@ -12,6 +12,19 @@ public class PowerUp : MonoBehaviour
 
     public Type type;
 
+    private AudioSource audioSource;
+    public AudioClip spawnSound;
+    public AudioClip collectSound;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (spawnSound != null )
+        {
+            audioSource.PlayOneShot(spawnSound);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && other.TryGetComponent(out Player player)) {
@@ -21,6 +34,12 @@ public class PowerUp : MonoBehaviour
 
     private void Collect(Player player)
     {
+        AudioSource playerAudioSource = player.gameObject.GetComponent<AudioSource>();
+        if (type != Type.Starpower )
+        {
+            playerAudioSource.PlayOneShot(collectSound);
+        }
+
         switch (type)
         {
             case Type.Coin:
@@ -36,7 +55,7 @@ public class PowerUp : MonoBehaviour
                 break;
 
             case Type.Starpower:
-                player.Starpower();
+                player.Starpower(collectSound);
                 break;
         }
 

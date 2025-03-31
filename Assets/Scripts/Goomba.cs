@@ -4,6 +4,15 @@ public class Goomba : MonoBehaviour
 {
     public Sprite flatSprite;
 
+    private AudioSource audioSource;
+    public AudioClip flatSound;
+    public AudioClip dieSound;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.TryGetComponent(out Player player))
@@ -27,6 +36,7 @@ public class Goomba : MonoBehaviour
 
     private void Flatten()
     {
+        audioSource.PlayOneShot(flatSound);
         GetComponent<Collider2D>().enabled = false;
         GetComponent<EntityMovement>().enabled = false;
         GetComponent<AnimatedSprite>().enabled = false;
@@ -36,6 +46,7 @@ public class Goomba : MonoBehaviour
 
     private void Hit()
     {
+        audioSource.PlayOneShot(dieSound);
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<DeathAnimation>().enabled = true;
         Destroy(gameObject, 3f);
