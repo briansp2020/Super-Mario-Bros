@@ -152,7 +152,7 @@ MonoBehaviour:
   emptyBlock: {fileID: 21300000, guid: 0c057401fbf74454fa3032deae7f0a61, type: 3}
   maxHits: -1
   brick: 1
-  breakParticle: {fileID: 1279121929777179781, guid: 46098b910987e3b4f97c5044568f1d90, type: 3}
+  breakParticle: {fileID: 1279121929777179781, guid: cba11e5c8e8e8fa41b51b499b0163bd2, type: 3}
   bumpSound: {fileID: 8300000, guid: 40c4c5434809c604595711a89d8dd13a, type: 3}
   coinSound: {fileID: 8300000, guid: 31090aac783c3e24eb2c3be26bfc2313, type: 3}
 --- !u!82 &6257043399652466990
