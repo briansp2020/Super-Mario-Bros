@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class FlagPole : MonoBehaviour
 {
     public Transform flag;
@@ -9,6 +10,15 @@ public class FlagPole : MonoBehaviour
     public float speed = 6f;
     public int nextWorld = 1;
     public int nextStage = 1;
+
+    private AudioSource audioSource;
+    public AudioClip flagSound;
+    public AudioClip completeSound;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,15 +32,19 @@ public class FlagPole : MonoBehaviour
     private IEnumerator LevelCompleteSequence(Player player)
     {
         player.movement.enabled = false;
+        Camera.main.GetComponent<Music>().StopMusic();
 
+        audioSource.PlayOneShot(flagSound);
         yield return MoveTo(player.transform, poleBottom.position);
+
+        audioSource.PlayOneShot(completeSound);
         yield return MoveTo(player.transform, player.transform.position + Vector3.right);
         yield return MoveTo(player.transform, player.transform.position + Vector3.right + Vector3.down);
         yield return MoveTo(player.transform, castle.position);
 
         player.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5.5f);
 
         GameManager.Instance.LoadLevel(nextWorld, nextStage);
     }

@@ -22,11 +22,16 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding => (inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
     public bool falling => velocity.y < 0f && !grounded;
 
+    private AudioSource audioSource;
+    public AudioClip smallJumpSound;
+    public AudioClip bigJumpSound;
+
     private void Awake()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -101,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
         // Perform jump
         if (Input.GetButtonDown("Jump"))
         {
+            audioSource.PlayOneShot(gameObject.GetComponent<Player>().big ? bigJumpSound : smallJumpSound);
             velocity.y = jumpForce;
             jumping = true;
         }

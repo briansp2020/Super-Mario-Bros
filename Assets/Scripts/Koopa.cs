@@ -8,6 +8,15 @@ public class Koopa : MonoBehaviour
     private bool shelled;
     private bool pushed;
 
+    private AudioSource audioSource;
+    public AudioClip stompSound;
+    public AudioClip shellKickSound;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!shelled && collision.gameObject.CompareTag("Player") && collision.gameObject.TryGetComponent(out Player player))
@@ -50,6 +59,8 @@ public class Koopa : MonoBehaviour
     {
         shelled = true;
 
+        audioSource.PlayOneShot(stompSound);
+
         GetComponent<SpriteRenderer>().sprite = shellSprite;
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<EntityMovement>().enabled = false;
@@ -58,6 +69,8 @@ public class Koopa : MonoBehaviour
     private void PushShell(Vector2 direction)
     {
         pushed = true;
+
+        audioSource.PlayOneShot(shellKickSound);
 
         GetComponent<Rigidbody2D>().isKinematic = false;
 
@@ -71,6 +84,7 @@ public class Koopa : MonoBehaviour
 
     private void Hit()
     {
+        audioSource.PlayOneShot(shellKickSound);
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<DeathAnimation>().enabled = true;
         Destroy(gameObject, 3f);

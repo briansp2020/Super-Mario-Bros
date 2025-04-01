@@ -64,6 +64,13 @@ public class DeathAnimation : MonoBehaviour
 
         Vector3 velocity = Vector3.up * jumpVelocity;
 
+        if (gameObject.CompareTag("Player"))
+        {
+            Time.timeScale = 0;
+            yield return new WaitForSecondsRealtime(0.6f);
+            Time.timeScale = 1;
+        }
+
         while (elapsed < duration)
         {
             transform.position += velocity * Time.deltaTime;

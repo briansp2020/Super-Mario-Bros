@@ -10,9 +10,16 @@ public class EntityMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 velocity;
 
+    private AudioSource audioSource;
+    public AudioClip bumpSound;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (GetComponent<AudioSource>() != null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
         enabled = false;
     }
 
@@ -49,6 +56,10 @@ public class EntityMovement : MonoBehaviour
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
 
         if (rb.Raycast(direction)) {
+            if (gameObject.layer == LayerMask.NameToLayer("Shell"))
+            {
+                audioSource.PlayOneShot(bumpSound);
+            }
             direction = -direction;
         }
 

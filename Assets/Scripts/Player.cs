@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     public PlayerSpriteRenderer bigRenderer;
     private PlayerSpriteRenderer activeRenderer;
 
+    private AudioSource audioSource;
+    public AudioClip shrinkSound;
+    public AudioClip dieSound;
+
     public bool big => bigRenderer.enabled;
     public bool dead => deathAnimation.enabled;
     public bool starpower { get; private set; }
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         movement = GetComponent<PlayerMovement>();
         deathAnimation = GetComponent<DeathAnimation>();
+        audioSource = GetComponent<AudioSource>();
         activeRenderer = smallRenderer;
     }
 
@@ -37,11 +42,19 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
+        Camera.main.GetComponent<Music>().StopMusic();
+        audioSource.PlayOneShot(dieSound);
         smallRenderer.enabled = false;
         bigRenderer.enabled = false;
         deathAnimation.enabled = true;
 
         GameManager.Instance.ResetLevel(3f);
+    }
+
+    public void NoAnimationDeath()
+    {
+        transform.position = new Vector2(transform.position.x, transform.position.y - 100);
+        Death();
     }
 
     public void Grow()
@@ -64,6 +77,8 @@ public class Player : MonoBehaviour
 
         capsuleCollider.size = new Vector2(1f, 1f);
         capsuleCollider.offset = new Vector2(0f, 0f);
+
+        audioSource.PlayOneShot(shrinkSound);
 
         StartCoroutine(ScaleAnimation());
     }
@@ -91,8 +106,11 @@ public class Player : MonoBehaviour
         activeRenderer.enabled = true;
     }
 
-    public void Starpower()
+    public void Starpower(AudioClip starMusic, float duration = 10)
     {
+        Music music = Camera.main.GetComponent<Music>();
+        music.PlayOverrideMusic(starMusic, duration);
+
         StartCoroutine(StarpowerAnimation());
     }
 
