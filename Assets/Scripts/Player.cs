@@ -9,21 +9,13 @@ public class Player : MonoBehaviour
 
     public PlayerSpriteRenderer smallRenderer;
     public PlayerSpriteRenderer bigRenderer;
-    public PlayerSpriteRenderer fireRenderer;
     private PlayerSpriteRenderer activeRenderer;
 
     private AudioSource audioSource;
     public AudioClip shrinkSound;
     public AudioClip dieSound;
-    public AudioClip fireballSound;
-
-    public GameObject fireball;
-    public int fireballCount = 0;
-    public bool throwingFireball { get; private set; } = false;
 
     public bool big => bigRenderer.enabled;
-    public bool small => smallRenderer.enabled;
-    public bool fire => fireRenderer.enabled;
     public bool dead => deathAnimation.enabled;
     public bool starpower { get; private set; }
 
@@ -36,35 +28,14 @@ public class Player : MonoBehaviour
         activeRenderer = smallRenderer;
     }
 
-    private void Update()
-    {
-        if (fire && Input.GetButtonDown("Fire3") && fireballCount < 2)
-        {
-            audioSource.PlayOneShot(fireballSound);
-            fireballCount++;
-            throwingFireball = true;
-            GameObject createdFireball = Instantiate(fireball, transform.position + new Vector3(0.5f, 0.5f, 0), transform.rotation);
-            Invoke(nameof(SetThrowingFireballToFalse), 0.1f);
-        }
-    }
-
-    //Only used to set the throwingFireball boolean to false
-    private void SetThrowingFireballToFalse()
-    {
-        throwingFireball = false;
-    }
-
     public void Hit()
     {
         if (!dead && !starpower)
         {
             if (big) {
                 Shrink();
-            } else if (small) {
+            } else {
                 Death();
-            } else{
-                audioSource.PlayOneShot(shrinkSound);
-                MakeBig(fireRenderer);
             }
         }
     }
@@ -86,29 +57,22 @@ public class Player : MonoBehaviour
         Death();
     }
 
-    public void MakeBig(PlayerSpriteRenderer before)
+    public void Grow()
     {
         smallRenderer.enabled = false;
         bigRenderer.enabled = true;
-        fireRenderer.enabled = false;
         activeRenderer = bigRenderer;
 
         capsuleCollider.size = new Vector2(1f, 2f);
         capsuleCollider.offset = new Vector2(0f, 0.5f);
 
-        StartCoroutine(TransformAnimation(before, bigRenderer));
-    }
-
-    public void Grow()
-    {
-        MakeBig(smallRenderer);
+        StartCoroutine(ScaleAnimation());
     }
 
     public void Shrink()
     {
         smallRenderer.enabled = true;
         bigRenderer.enabled = false;
-        fireRenderer.enabled = false;
         activeRenderer = smallRenderer;
 
         capsuleCollider.size = new Vector2(1f, 1f);
@@ -116,29 +80,11 @@ public class Player : MonoBehaviour
 
         audioSource.PlayOneShot(shrinkSound);
 
-        StartCoroutine(TransformAnimation(bigRenderer, smallRenderer));
+        StartCoroutine(ScaleAnimation());
     }
 
-    public void ActivateFire()
+    private IEnumerator ScaleAnimation()
     {
-        smallRenderer.enabled = false;
-        bigRenderer.enabled = false;
-        fireRenderer.enabled = true;
-        activeRenderer = fireRenderer;
-
-        capsuleCollider.size = new Vector2(1f, 2f);
-        capsuleCollider.offset = new Vector2(0f, 0.5f);
-
-        StartCoroutine(TransformAnimation(bigRenderer, fireRenderer));
-    }
-
-    private IEnumerator TransformAnimation(PlayerSpriteRenderer before, PlayerSpriteRenderer after)
-    {
-        smallRenderer.enabled = false;
-        bigRenderer.enabled = false;
-        fireRenderer.enabled = false;
-        activeRenderer.enabled = true;
-
         float elapsed = 0f;
         float duration = 0.5f;
 
@@ -148,8 +94,8 @@ public class Player : MonoBehaviour
 
             if (Time.frameCount % 4 == 0)
             {
-                before.enabled = !before.enabled;
-                after.enabled = !before.enabled;
+                smallRenderer.enabled = !smallRenderer.enabled;
+                bigRenderer.enabled = !smallRenderer.enabled;
             }
 
             yield return null;
@@ -157,7 +103,6 @@ public class Player : MonoBehaviour
 
         smallRenderer.enabled = false;
         bigRenderer.enabled = false;
-        fireRenderer.enabled = false;
         activeRenderer.enabled = true;
     }
 

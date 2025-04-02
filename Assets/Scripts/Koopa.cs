@@ -29,11 +29,6 @@ public class Koopa : MonoBehaviour
                 player.Hit();
             }
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Fireball"))
-        {
-            Destroy(collision.gameObject);
-            Hit();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

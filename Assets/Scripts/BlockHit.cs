@@ -4,8 +4,6 @@ using UnityEngine;
 public class BlockHit : MonoBehaviour
 {
     public GameObject item;
-    [Tooltip("Used in case the item must change based off of a condition (eg. if mario is small)")]
-    public GameObject secondaryItem = null;
     public Sprite emptyBlock;
     public int maxHits = -1;
     private bool animating;
@@ -64,7 +62,7 @@ public class BlockHit : MonoBehaviour
 
         if (collision.transform.DotTest(transform, Vector2.up))
         {
-            if (!player.small && brick)
+            if (player.big && brick)
             {
                 Break(breakParticle);
             }
@@ -77,7 +75,6 @@ public class BlockHit : MonoBehaviour
 
     private void Hit()
     {
-        print(GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>() == null);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = true; // show if hidden
         gameObject.layer = LayerMask.NameToLayer("Default");
@@ -96,13 +93,7 @@ public class BlockHit : MonoBehaviour
             {
                 audioSource.PlayOneShot(coinSound);
             }
-            if (item.name == "FireFlower" && GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>().small)
-            {
-                Instantiate(secondaryItem, transform.position, Quaternion.identity);
-            } else
-            {
-                Instantiate(item, transform.position, Quaternion.identity);
-            }
+            Instantiate(item, transform.position, Quaternion.identity);
         }
 
         StartCoroutine(Animate());
