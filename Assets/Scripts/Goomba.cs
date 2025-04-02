@@ -24,6 +24,11 @@ public class Goomba : MonoBehaviour
             } else {
                 player.Hit();
             }
+        } 
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Fireball"))
+        {
+            Destroy(collision.gameObject);
+            Hit();
         }
     }
 
