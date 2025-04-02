@@ -16,7 +16,7 @@ public class Fireball : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>();
         direction = transform.rotation.y == 0 ? Vector2.right : Vector2.left;
     }
 

@@ -77,6 +77,7 @@ public class BlockHit : MonoBehaviour
 
     private void Hit()
     {
+        print(GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>() == null);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = true; // show if hidden
         gameObject.layer = LayerMask.NameToLayer("Default");
@@ -95,7 +96,7 @@ public class BlockHit : MonoBehaviour
             {
                 audioSource.PlayOneShot(coinSound);
             }
-            if (item.name == "FireFlower" && GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().small)
+            if (item.name == "FireFlower" && GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>().small)
             {
                 Instantiate(secondaryItem, transform.position, Quaternion.identity);
             } else
