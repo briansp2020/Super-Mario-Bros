@@ -8,6 +8,7 @@ public class PowerUp : MonoBehaviour
         ExtraLife,
         MagicMushroom,
         Starpower,
+        FireFlower,
     }
 
     public Type type;
@@ -34,7 +35,7 @@ public class PowerUp : MonoBehaviour
 
     private void Collect(Player player)
     {
-        AudioSource playerAudioSource = player.gameObject.GetComponent<AudioSource>();
+        AudioSource playerAudioSource = player.GetComponent<AudioSource>();
         if (type != Type.Starpower )
         {
             playerAudioSource.PlayOneShot(collectSound);
@@ -51,7 +52,7 @@ public class PowerUp : MonoBehaviour
                 break;
 
             case Type.MagicMushroom:
-                if (!player.GetComponent<Player>().big)
+                if (player.small)
                 {
                     player.Grow();
                 }
@@ -59,6 +60,13 @@ public class PowerUp : MonoBehaviour
 
             case Type.Starpower:
                 player.Starpower(collectSound);
+                break;
+
+            case Type.FireFlower:
+                if (!player.fire)
+                {
+                    player.ActivateFire();
+                }
                 break;
         }
 
