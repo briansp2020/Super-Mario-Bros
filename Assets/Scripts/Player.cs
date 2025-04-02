@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
             fireballCount++;
             throwingFireball = true;
             GameObject createdFireball = Instantiate(fireball, transform.position + new Vector3(0.5f, 0.5f, 0), transform.rotation);
+            createdFireball.GetComponent<Fireball>().player = this;
             Invoke(nameof(SetThrowingFireballToFalse), 0.1f);
         }
     }

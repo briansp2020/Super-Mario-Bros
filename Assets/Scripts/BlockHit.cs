@@ -39,7 +39,7 @@ public class BlockHit : MonoBehaviour
                     Break(breakParticle);
                 } else
                 {
-                    Hit();
+                    Hit(collision.gameObject.GetComponent<Player>());
                 }
             }
         }
@@ -70,14 +70,14 @@ public class BlockHit : MonoBehaviour
             }
             else
             {
-                Hit();
+                Hit(collision.GetComponent<Player>());
             }
         }
     }
 
-    private void Hit()
+    private void Hit(Player player)
     {
-        print(GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>() == null);
+        print(GameObject.Find("Mario"));
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = true; // show if hidden
         gameObject.layer = LayerMask.NameToLayer("Default");
@@ -96,7 +96,7 @@ public class BlockHit : MonoBehaviour
             {
                 audioSource.PlayOneShot(coinSound);
             }
-            if (item.name == "FireFlower" && GameObject.FindWithTag("Player").transform.parent.GetComponent<Player>().small)
+            if (item.name == "FireFlower" && player.small)
             {
                 Instantiate(secondaryItem, transform.position, Quaternion.identity);
             } else
