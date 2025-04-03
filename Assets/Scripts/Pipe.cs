@@ -11,9 +11,12 @@ public class Pipe : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip pipeSound;
 
+    private Timer timer;
+
     private Music music;
     [Tooltip("The music that should play when the player exits the pipe")]
     public AudioClip newMusic;
+    public AudioClip newHurryMusic;
 
 
     private void Awake()
@@ -23,6 +26,7 @@ public class Pipe : MonoBehaviour
             audioSource = gameObject.GetComponent<AudioSource>();
         }
         music = Camera.main.GetComponent<Music>();
+        timer = Camera.main.GetComponent<Timer>();
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -43,6 +47,7 @@ public class Pipe : MonoBehaviour
         Vector3 enteredScale = Vector3.one * 0.5f;
 
         music.StopMusic();
+        timer.stopTime = true;
         audioSource.PlayOneShot(pipeSound);
 
         yield return Move(player.transform, enteredPosition, enteredScale);
@@ -51,7 +56,8 @@ public class Pipe : MonoBehaviour
         var sideSrolling = Camera.main.GetComponent<SideScrollingCamera>();
         sideSrolling.SetUnderground(connection.position.y < sideSrolling.undergroundThreshold);
 
-        music.PlayMusic(newMusic);
+        music.PlayMusic(newMusic, -1, newHurryMusic);
+        timer.stopTime = false;
 
         if (exitDirection != Vector3.zero)
         {
