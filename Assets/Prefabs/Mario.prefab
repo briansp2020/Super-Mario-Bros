@@ -122,7 +122,7 @@ MonoBehaviour:
   shrinkSound: {fileID: 8300000, guid: 438de422b9f79ba49bdb878d118eb05a, type: 3}
   dieSound: {fileID: 8300000, guid: a1443f5e794b0ad4da8ba3c14921c287, type: 3}
   fireballSound: {fileID: 8300000, guid: b54836f937fb82e45af32ef093ffc721, type: 3}
-  fireball: {fileID: 1762333289834916202, guid: b7cb04c1df8834341be73cff60bcd92a, type: 3}
+  fireball: {fileID: 1762333289834916202, guid: 7c3438f1ef3a8624cae6bb895f3e7366, type: 3}
   fireballCount: 0
 --- !u!114 &481021467160599388
 MonoBehaviour:
