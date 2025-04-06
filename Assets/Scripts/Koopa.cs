@@ -92,6 +92,7 @@ public class Koopa : MonoBehaviour
         audioSource.PlayOneShot(shellKickSound);
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<DeathAnimation>().enabled = true;
+        GameManager.Instance.AddScore(100);
         Destroy(gameObject, 3f);
     }
 
