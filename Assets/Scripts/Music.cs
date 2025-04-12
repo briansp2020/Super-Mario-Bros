@@ -45,10 +45,12 @@ public class Music : MonoBehaviour
             audioSource.clip = music;
         }
 
-
-        audioSource.loop = true;
-        audioSource.Play();
-        isStopped = false;
+        if (audioSource.clip != hurryWarning)
+        {
+            audioSource.loop = true;
+            audioSource.Play();
+            isStopped = false;
+        }
 
         if (duration > 0)
         {
@@ -56,6 +58,7 @@ public class Music : MonoBehaviour
         } else
         {
             defaultMusic = music;
+            this.music = music;
         }
     }
 
@@ -81,14 +84,15 @@ public class Music : MonoBehaviour
         isStopped = true;
     }
 
-    public IEnumerator ActivateHurryMusic()
+    public void ActivateHurryMusic()
     {
         // This is done to not override the star power music
-        audioSource.clip = hurryWarning;
+        audioSource.clip = audioSource.clip != hurryWarning ? hurryWarning : overrideMusic ?? hurryMusic;
         audioSource.Play();
-        
-        yield return new WaitForSeconds(hurryWarning.length);
 
-        PlayMusic(hurryMusic);
+        if (audioSource.clip == hurryWarning)
+        {
+            Invoke(nameof(ActivateHurryMusic), hurryWarning.length);
+        }
     }
 }

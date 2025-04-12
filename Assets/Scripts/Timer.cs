@@ -6,7 +6,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 	public TextMeshProUGUI timerText;
-	public float time = 300;
+	public float time = 400;
 	public bool stopTime;
 
 	private Music music;
@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
 
 	private IEnumerator CountTimer()
 	{
-		while (time > 0)
+		while (time >= 1)
 		{
 			if (!stopTime)
 			{
@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
 			if (!hurry && time <= hurryTime)
 			{
-				StartCoroutine(music.ActivateHurryMusic());
+				music.ActivateHurryMusic();
 			}
 
 			hurry = time <= hurryTime;
