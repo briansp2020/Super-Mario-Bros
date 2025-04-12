@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public int stage { get; private set; } = 1;
     public int lives { get; private set; } = 3;
     public int coins { get; private set; } = 0;
+    public int score{get;private set;}=0;
+
+    
 
     private void Awake()
     {
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
         Invoke(nameof(ResetLevel), delay);
     }
 
+
     public void ResetLevel()
     {
         lives--;
@@ -80,6 +84,7 @@ public class GameManager : MonoBehaviour
     public void AddCoin()
     {
         coins++;
+        score+=100;
 
         if (coins == 100)
         {
@@ -92,4 +97,9 @@ public class GameManager : MonoBehaviour
     {
         lives++;
     }
+    public void AddScore(int value)
+    {
+        score+=value;
+    }
+
 }
