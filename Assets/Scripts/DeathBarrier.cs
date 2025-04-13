@@ -7,12 +7,12 @@ public class DeathBarrier : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().NoAnimationDeath();
+            other.GetComponent<Player>().Death();
         }
-        else
-        {
-            Destroy(other.gameObject);
-        }
+    else
+    {
+        Destroy(other.gameObject);
     }
+}
 
 }

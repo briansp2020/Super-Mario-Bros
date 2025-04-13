@@ -98,9 +98,23 @@ public class Koopa : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        if (pushed) {
-            Destroy(gameObject);
-        }
+        if (pushed){
+            Invoke(nameof(DestroyKoopa), 3.0f);
+            }
     }
+
+    private void DestroyKoopa()
+    {
+        Destroy(gameObject);
+    }
+    private void OnBecameVisible()
+    {
+        if(pushed)
+            CancelInvoke(nameof(DestroyKoopa));
+    }
+
+
+
+
 
 }
