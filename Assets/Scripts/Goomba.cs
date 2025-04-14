@@ -53,6 +53,7 @@ public class Goomba : MonoBehaviour
     private void Hit()
     {
         audioSource.PlayOneShot(dieSound);
+        GetComponent<SpriteRenderer>().flipY=true;
         GetComponent<AnimatedSprite>().enabled = false;
         GetComponent<DeathAnimation>().enabled = true;
         GameManager.Instance.AddScore(100);
