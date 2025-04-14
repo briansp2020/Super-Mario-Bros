@@ -77,7 +77,6 @@ public class BlockHit : MonoBehaviour
 
     private void Hit(Player player)
     {
-        print(GameObject.Find("Mario"));
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = true; // show if hidden
         gameObject.layer = LayerMask.NameToLayer("Default");

@@ -1,9 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class Music : MonoBehaviour
 {
     public AudioSource audioSource { get; private set; }
     public AudioClip music;
+    public AudioClip hurryWarning;
     public AudioClip hurryMusic;
     public AudioClip introMusic;
 
@@ -23,12 +25,32 @@ public class Music : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayMusic(AudioClip music, float duration = -1)
+    private void Update()
     {
-        audioSource.clip = overrideMusic ?? music;
-        audioSource.loop = true;
-        audioSource.Play();
-        isStopped = false;
+        defaultMusic = Camera.main.GetComponent<Timer>().hurry ? hurryMusic : music;
+    }
+
+    public void PlayMusic(AudioClip music, float duration = -1, AudioClip hurryMusic = null)
+    {
+        if (overrideMusic)
+        {
+            audioSource.clip = overrideMusic;
+        }
+        else if (hurryMusic != null && GetComponent<Timer>().hurry)
+        {
+            audioSource.clip = hurryMusic;
+        }
+        else
+        {
+            audioSource.clip = music;
+        }
+
+        if (audioSource.clip != hurryWarning)
+        {
+            audioSource.loop = true;
+            audioSource.Play();
+            isStopped = false;
+        }
 
         if (duration > 0)
         {
@@ -36,6 +58,7 @@ public class Music : MonoBehaviour
         } else
         {
             defaultMusic = music;
+            this.music = music;
         }
     }
 
@@ -59,5 +82,17 @@ public class Music : MonoBehaviour
         audioSource.Stop();
         audioSource.loop = false;
         isStopped = true;
+    }
+
+    public void ActivateHurryMusic()
+    {
+        // This is done to not override the star power music
+        audioSource.clip = audioSource.clip != hurryWarning ? hurryWarning : overrideMusic ?? hurryMusic;
+        audioSource.Play();
+
+        if (audioSource.clip == hurryWarning)
+        {
+            Invoke(nameof(ActivateHurryMusic), hurryWarning.length);
+        }
     }
 }

@@ -35,7 +35,7 @@ public class BlockItem : MonoBehaviour
             float t = elapsed / duration;
 
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
-            elapsed += Time.deltaTime;
+            elapsed += UnityEngine.Time.deltaTime;
 
             yield return null;
         }

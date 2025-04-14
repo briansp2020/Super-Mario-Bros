@@ -33,6 +33,7 @@ public class FlagPole : MonoBehaviour
     {
         player.movement.enabled = false;
         Camera.main.GetComponent<Music>().StopMusic();
+        Camera.main.GetComponent<Timer>().stopTime = true;
 
         audioSource.PlayOneShot(flagSound);
         yield return MoveTo(player.transform, poleBottom.position);
