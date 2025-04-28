@@ -50,7 +50,7 @@ public class Goomba : MonoBehaviour
         Destroy(gameObject, 0.5f);
     }
 
-    private void Hit()
+    public void Hit()
     {
         audioSource.PlayOneShot(dieSound);
         GetComponent<SpriteRenderer>().flipY=true;

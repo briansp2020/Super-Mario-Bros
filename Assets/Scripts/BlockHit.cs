@@ -115,9 +115,11 @@ public class BlockHit : MonoBehaviour
         Vector3 animatedPosition = restingPosition + Vector3.up * 0.5f;
 
         yield return Move(restingPosition, animatedPosition);
+        CheckForThingsAbove();
         yield return Move(animatedPosition, restingPosition);
 
         animating = false;
+        
     }
 
     private IEnumerator Move(Vector3 from, Vector3 to)
@@ -142,6 +144,38 @@ public class BlockHit : MonoBehaviour
     {
         Instantiate(breakParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    private void CheckForThingsAbove()
+    {
+        Vector2 center = (Vector2)transform.position + Vector2.up * 0.5f;
+        Vector2 size = new Vector2(1f, 0.25f);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                if (hit.TryGetComponent(out Goomba goomba))
+                {
+                    goomba.Hit();
+                }
+                if (hit.TryGetComponent(out Koopa koopa))
+                {
+                    koopa.Hit();
+                }
+            }
+            else if (hit.CompareTag("Powerup"))
+            {
+                Rigidbody2D rb = hit.attachedRigidbody;
+                if (rb != null)
+                {
+                    // FLIP their X velocity
+                    rb.linearVelocity = new Vector2(-rb.linearVelocity.x, rb.linearVelocity.y);
+                }
+            }
+        }
     }
 
 }

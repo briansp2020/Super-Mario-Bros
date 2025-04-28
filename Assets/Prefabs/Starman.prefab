@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -2793931317683581942}
   m_Layer: 6
   m_Name: Starman
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

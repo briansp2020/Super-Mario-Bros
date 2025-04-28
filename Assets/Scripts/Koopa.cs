@@ -87,7 +87,7 @@ public class Koopa : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Shell");
     }
 
-    private void Hit()
+    public void Hit()
     {
         audioSource.PlayOneShot(shellKickSound);
         GetComponent<AnimatedSprite>().enabled = false;
