@@ -2830,6 +2830,13 @@ MonoBehaviour:
   hurryWarning: {fileID: 8300000, guid: deab1c943e245c549b78874fe3d9cd7e, type: 3}
   hurryMusic: {fileID: 8300000, guid: 677962b6f47f6454c961a12f42b3f8ed, type: 3}
   introMusic: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 533783560cb291744808f48cf39e1cd5, type: 3}
+  hurryBackgroundMusic: {fileID: 8300000, guid: 677962b6f47f6454c961a12f42b3f8ed, type: 3}
+  subAreaMusic: {fileID: 8300000, guid: 171af61881304d84daec6d2a56695b2f, type: 3}
+  hurrySubAreaMusic: {fileID: 8300000, guid: 039e2862bc192db4191820205d63bb54, type: 3}
+  starPowerMusic: {fileID: 8300000, guid: 9234725921a1a4148ae7e6f5700666f7, type: 3}
+  subArea: 0
+  noBackgroundMusic: 0
 --- !u!82 &519420034
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5452,11 +5459,11 @@ PrefabInstance:
     - target: {fileID: 5197151675358696834, guid: e62038c0504cf124bb51628b480df8f0, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 3241312894935584276, guid: a9358a3e1c255c046891fe6146a5f380, type: 3}
+      objectReference: {fileID: 1608222014282682259, guid: 30d9b35c65014314097a1b398e884949, type: 3}
     - target: {fileID: 5197151675358696834, guid: e62038c0504cf124bb51628b480df8f0, type: 3}
       propertyPath: secondaryItem
       value: 
-      objectReference: {fileID: 6339062154244680120, guid: ae94f5b02f385a7489be0c1da30497bf, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 9166230116066908815, guid: e62038c0504cf124bb51628b480df8f0, type: 3}
       propertyPath: m_Name
       value: Mystery Block (Magic Mushroom)
@@ -10136,8 +10143,8 @@ Transform:
   m_Children:
   - {fileID: 1374034425}
   - {fileID: 1586091689}
-  - {fileID: 815771866}
   - {fileID: 5875134449636186738}
+  - {fileID: 815771866}
   - {fileID: 1673770313}
   - {fileID: 1913555825}
   - {fileID: 250764408}
@@ -13192,6 +13199,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 438de422b9f79ba49bdb878d118eb05a, type: 3}
     - target: {fileID: 5674727796144505232, guid: 65b70367d97a6a041b6b5110249c2668, type: 3}
+      propertyPath: toSubArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674727796144505232, guid: 65b70367d97a6a041b6b5110249c2668, type: 3}
       propertyPath: connection
       value: 
       objectReference: {fileID: 1374034425}
@@ -14590,6 +14601,10 @@ PrefabInstance:
       propertyPath: pipeSound
       value: 
       objectReference: {fileID: 8300000, guid: 438de422b9f79ba49bdb878d118eb05a, type: 3}
+    - target: {fileID: 4399478865317670441, guid: ed187b71a97bea840801d7d397bb47b7, type: 3}
+      propertyPath: toSubArea
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4399478865317670441, guid: ed187b71a97bea840801d7d397bb47b7, type: 3}
       propertyPath: connection
       value: 

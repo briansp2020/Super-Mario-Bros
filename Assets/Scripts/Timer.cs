@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 
 	private Music music;
 
-	private int hurryTime = 100;
+	public int hurryTime { get; private set; } = 100;
 	public bool hurry { get; private set; } = false;
 
 	void Start()
@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
 			if (!hurry && time <= hurryTime)
 			{
-				music.ActivateHurryMusic();
+				StartCoroutine(music.ActivateHurryMusic());
 			}
 
 			hurry = time <= hurryTime;

@@ -14,9 +14,8 @@ public class Pipe : MonoBehaviour
     private Timer timer;
 
     private Music music;
-    [Tooltip("The music that should play when the player exits the pipe")]
-    public AudioClip newMusic;
-    public AudioClip newHurryMusic;
+
+    public bool toSubArea = false;
 
 
     private void Awake()
@@ -46,7 +45,14 @@ public class Pipe : MonoBehaviour
         Vector3 enteredPosition = transform.position + enterDirection;
         Vector3 enteredScale = Vector3.one * 0.5f;
 
-        music.StopMusic();
+        if (music.hurryWarningPlaying)
+        {
+            music.gameObject.GetComponent<AudioSource>().Pause();
+        } else
+        {
+            music.StopMusic();
+        }
+
         timer.stopTime = true;
         audioSource.PlayOneShot(pipeSound);
 
@@ -56,8 +62,17 @@ public class Pipe : MonoBehaviour
         var sideSrolling = Camera.main.GetComponent<SideScrollingCamera>();
         sideSrolling.SetUnderground(connection.position.y < sideSrolling.undergroundThreshold);
 
-        music.PlayMusic(newMusic, -1, newHurryMusic);
+        music.subArea = toSubArea;
         timer.stopTime = false;
+
+        if (music.hurryWarningPlaying)
+        {
+            music.gameObject.GetComponent<AudioSource>().UnPause();
+        }
+        else
+        {
+            music.PickMusic();
+        }
 
         if (exitDirection != Vector3.zero)
         {
