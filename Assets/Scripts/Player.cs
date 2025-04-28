@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
         Music music = Camera.main.GetComponent<Music>();
 
         StartCoroutine(StarpowerAnimation());
-        music.PickMusic();
+        music.PlayMusic();
     }
 
     private IEnumerator StarpowerAnimation()
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
 
         activeRenderer.spriteRenderer.color = Color.white;
         starpower = false;
-        Camera.main.GetComponent<Music>().PickMusic();
+        Camera.main.GetComponent<Music>().PlayMusic();
     }
 
 }

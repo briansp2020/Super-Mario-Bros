@@ -41,9 +41,8 @@ public class Music : MonoBehaviour
         defaultMusic = Camera.main.GetComponent<Timer>().hurry ? hurryMusic : music;
     }
 
-    public void PickMusic(AudioClip clip = null)
+    public void PlayMusic(AudioClip clip = null)
     {
-        print(noBackgroundMusic);
         if (!noBackgroundMusic)
         {
             if (GameObject.FindWithTag("Player").GetComponent<Player>().starpower)
@@ -78,53 +77,6 @@ public class Music : MonoBehaviour
         }
     }
 
-    public void PlayMusic(AudioClip music, float duration = -1, AudioClip hurryMusic = null)
-    {
-        if (overrideMusic)
-        {
-            audioSource.clip = overrideMusic;
-        }
-        else if (hurryMusic != null && GetComponent<Timer>().hurry)
-        {
-            audioSource.clip = hurryMusic;
-        }
-        else
-        {
-            audioSource.clip = music;
-        }
-
-        if (audioSource.clip != hurryWarning)
-        {
-            audioSource.loop = true;
-            audioSource.Play();
-            isStopped = false;
-        }
-
-        if (duration > 0)
-        {
-            Invoke(nameof(SwitchMusicBack), duration);
-        } else
-        {
-            defaultMusic = music;
-            this.music = music;
-        }
-    }
-
-    public void PlayOverrideMusic(AudioClip music, float duration)
-    {
-        overrideMusic = music;
-        PlayMusic(music, duration);
-    }
-
-    private void SwitchMusicBack()
-    {
-        if (!isStopped)
-        {
-            overrideMusic = null;
-            PlayMusic(defaultMusic, -1);
-        }
-    }
-
     public void StopMusic()
     {
         audioSource.Stop();
@@ -140,8 +92,6 @@ public class Music : MonoBehaviour
         hurryWarningPlaying = true;
         audioSource.Play();
 
-        print("setting noBackgroundMusic to true");
-
         //yield return new WaitForSeconds(hurryWarning.length);
         Timer timer = GetComponent<Timer>();
         while (timer.time >= timer.hurryTime - hurryWarning.length)
@@ -149,10 +99,9 @@ public class Music : MonoBehaviour
             yield return null;
         }
 
-        print("setting noBackgroundMusic to false");
         hurryWarningPlaying = false;
         noBackgroundMusic = false;
         audioSource.loop = true;
-        PickMusic();
+        PlayMusic();
     }
 }

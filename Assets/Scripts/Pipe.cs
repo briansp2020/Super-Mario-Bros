@@ -71,7 +71,7 @@ public class Pipe : MonoBehaviour
         }
         else
         {
-            music.PickMusic();
+            music.PlayMusic();
         }
 
         if (exitDirection != Vector3.zero)
